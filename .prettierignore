@@ -1,0 +1,18 @@
+# Environment files
+.env
+*.env
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Config and lock files
+package.json
+tsconfig.json
+yarn.lock
+tsconfig.tsbuildinfo
+
+# Generated folders
+prisma
