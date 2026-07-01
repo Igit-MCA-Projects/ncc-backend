@@ -57,4 +57,50 @@ const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
     .json(new ApiResponse(200, "Email verifyed login", null));
 });
 
-export { verifyEmail };
+const verifyEmailAdmin = asyncHandler(async (req: Request, res: Response) => {
+  const validRes = dataSchema.safeParse(req.body);
+  if (!validRes.success) {
+    throw new ApiError(400, "Invalid data", validRes.error.issues);
+  }
+
+  const data = validRes.data;
+
+  // get the user
+  const user = await db.admin.findUnique({
+    where: {
+      email: data.email,
+    },
+    select: {
+      verifyToken: true,
+      id: true,
+    },
+  });
+
+  if (!user) {
+    throw new ApiError(400, "Provided email is not found");
+  }
+
+  const otpCheck: boolean = await bcrypt.compare(
+    data.otp,
+    user.verifyToken as string,
+  );
+  if (!otpCheck) {
+    throw new ApiError(400, "Invalid otp");
+  }
+  // update the verify status
+  const updateStatus = await db.admin.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      emailVerifyed: true,
+      verifyToken: null,
+    },
+  });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Email verifyed login", null));
+});
+
+export { verifyEmail, verifyEmailAdmin };

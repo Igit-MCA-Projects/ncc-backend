@@ -1,8 +1,8 @@
 import rateLimit from "express-rate-limit";
 import { ApiResponse } from "./apiResponse.js";
 const loginLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 15 minutes
-  limit: 10,
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  limit: 100,
   message: new ApiResponse(
     429,
     "Too many login attempts, try again after some time",
@@ -13,4 +13,17 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-export { loginLimiter };
+const adminLoginLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  limit: 20,
+  message: new ApiResponse(
+    429,
+    "Too many login attempts, try again after some time",
+    null,
+  ),
+
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+export { loginLimiter, adminLoginLimiter };

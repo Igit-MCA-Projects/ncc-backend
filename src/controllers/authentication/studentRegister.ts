@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 import { db } from "../../db/prisma.js";
 import { generateOTP } from "../../helper/generateOtp.js";
 import { sendMail } from "../../helper/sendMail.js";
-import { accountVerificationMailTemplate } from "../../mailFormat/verifyEmailOtp.js";
+import { accountVerificationMailTemplate } from "../../validator/mailFormat/verifyEmailOtp.js";
 
 const studentDataSchema = z.object({
   fullName: z.string().trim().min(1, { message: "Full name is required" }),

@@ -39,6 +39,7 @@ model Admin {
 
   isActive   Boolean @default(true)
   isVerified Boolean @default(false)
+  emailVerifyed Boolean @default(false)
 
   // Organization
   organizationId String?
