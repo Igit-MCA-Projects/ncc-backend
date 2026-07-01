@@ -1,20 +1,231 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "postgresql"
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
 
-model User { 
-  id    Int     @id @default(autoincrement()) 
-  email String  @unique
-  name  String?
-} 
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum AdminRole {
+  SYSTEM_ADMIN
+  TEACHER
+  RECRUITER
+}
+
+model Admin {
+  id String @id @default(cuid())
+
+  fullName     String
+  profileImage String?
+  email        String  @unique
+  phone        String? @unique
+  designation  String?
+  verifyToken  String?
+
+  password String
+
+  role AdminRole
+
+  isActive   Boolean @default(true)
+  isVerified Boolean @default(false)
+
+  // Organization
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Soft Delete
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  @@index([organizationId])
+  @@index([role])
+}
+
+enum OrganizationType {
+  COMPANY
+  COLLEGE
+  UNIVERSITY
+  TRAINING_INSTITUTE
+  GOVERNMENT
+  NGO
+  OTHER
+}
+
+model Organization {
+  id String @id @default(cuid())
+
+  name  String
+  type  OrganizationType @default(COLLEGE)
+  email String?          @unique
+  phone String?
+
+  website String?
+  logo    String?
+
+  description String? @db.Text
+  isVerified  Boolean @default(false)
+
+  // Relations
+  admins  Admin[]
+  address Address?
+
+  // Soft Delete
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SocialLink {
+  id        String  @id @default(cuid())
+  platform  String
+  url       String
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model Student {
+  id String @id @default(cuid())
+
+  // Basic Information
+  fullName    String
+  email       String    @unique
+  phone       String?   @unique
+  password    String?
+  dateOfBirth DateTime?
+  gender      Gender?
+  verifyToken String?
+
+  // Profile
+  headline     String? // Full Stack Developer
+  bio          String? @db.Text
+  profileImage String?
+  resumeUrl    String?
+
+  educations  Education[]
+  socialLinks SocialLink[]
+
+  // Job Preferences
+  preferredRole     String?
+  preferredLocation String[]
+  expectedSalary    Int?
+  willingToRelocate Boolean  @default(false)
+  openToRemote      Boolean  @default(true)
+
+  // Account
+  status           StudentStatus @default(ACTIVE)
+  profileCompleted Boolean       @default(false)
+  profileScore     Int           @default(0)
+
+  // Verification
+  emailVerified Boolean @default(false)
+  phoneVerified Boolean @default(false)
+
+  // Soft Delete
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  // Audit
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  addresses Address[]
+}
+
+enum AddressType {
+  CURRENT
+  PERMANENT
+  HOSTEL
+  OFFICE
+  OTHER
+}
+
+model Address {
+  id       String      @id @default(cuid())
+  type     AddressType @default(PERMANENT)
+  city     String
+  district String
+  state    String
+  country  String
+  pinCode  String
+
+  landMark String?
+  building String?
+  street   String?
+
+  // Relation
+  studentId String?
+  student   Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  educationId String?    @unique
+  education   Education? @relation(fields: [educationId], references: [id], onDelete: Cascade)
+
+  organizationId String?       @unique
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId]) //indexing for better query
+  @@index([city])
+  @@index([state])
+  @@index([country])
+}
+
+enum EducationLevel {
+  HIGH_SCHOOL
+  DIPLOMA
+  BACHELORS
+  MASTERS
+  PHD
+  CERTIFICATION
+  OTHER
+}
+
+model Education {
+  id String @id @default(cuid())
+
+  level EducationLevel
+
+  institutionName   String
+  boardOrUniversity String?
+
+  degree       String?
+  fieldOfStudy String?
+
+  startDate DateTime
+  endDate   DateTime?
+
+  percentage Float?
+  cgpa       Float?
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  address Address?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId])
+}
+
+model BacklistToken {
+  id    String @id @default(cuid())
+  token String
+}
