@@ -3,13 +3,12 @@ import { validEnv } from "../validator/envValidator.js";
 
 import jwt from "jsonwebtoken";
 
-const createAccessToken = async (id: string) => {
+const createAccessToken = (id: string) => {
   try {
-    // Ensure secret and expiry are plain strings to satisfy jwt type signatures
     const secret: string = String(validEnv.ACCESS_TOKEN_SECRET);
-    const expiresIn: string = String(validEnv.ACCESS_TOKEN_EXPIRY) + "d";
+    const expiresIn = Number(validEnv.ACCESS_TOKEN_EXPIRY) * 24 * 60 * 60;
 
-    const accessToken = jwt.sign({ id: id }, secret);
+    const accessToken = jwt.sign({ id }, secret, { expiresIn });
     return accessToken;
   } catch (error: any) {
     throw new ApiError(
