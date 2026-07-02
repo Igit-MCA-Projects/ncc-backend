@@ -5,7 +5,6 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import { validEnv } from "../../validator/envValidator.js";
 
 const logout = asyncHandler(async (req: Request, res: Response) => {
-    
   res.clearCookie("accesstoken", {
     httpOnly: true,
     sameSite: validEnv.NODE_ENV === "PROD" ? "none" : "lax",

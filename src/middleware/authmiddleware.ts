@@ -94,4 +94,4 @@ const authMiddleware = asyncHandler(
   },
 );
 
-export {authMiddleware}
+export { authMiddleware };
