@@ -175,27 +175,7 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
   });
 
   return res.status(200).json(
-    new ApiResponse(200, "Profile completed successfully", {
-      id: updatedStudent?.id,
-      fullName: updatedStudent?.fullName,
-      email: updatedStudent?.email,
-      phone: updatedStudent?.phone,
-      dateOfBirth: updatedStudent?.dateOfBirth,
-      gender: updatedStudent?.gender,
-      headline: updatedStudent?.headline,
-      bio: updatedStudent?.bio,
-      profileImage: updatedStudent?.profileImage,
-      resumeUrl: updatedStudent?.resumeUrl,
-      preferredRole: updatedStudent?.preferredRole,
-      preferredLocation: updatedStudent?.preferredLocation,
-      expectedSalary: updatedStudent?.expectedSalary,
-      willingToRelocate: updatedStudent?.willingToRelocate,
-      openToRemote: updatedStudent?.openToRemote,
-      profileCompleted: updatedStudent?.profileCompleted,
-      addresses: updatedStudent?.addresses,
-      educations: updatedStudent?.educations,
-      socialLinks: updatedStudent?.socialLinks,
-    }),
+    new ApiResponse(200, "Profile completed successfully",null),
   );
 });
 

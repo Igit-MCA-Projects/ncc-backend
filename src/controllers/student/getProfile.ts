@@ -16,7 +16,45 @@ const getProfile = asyncHandler(async (req: Request, res: Response) => {
     where: {
       id: studentId,
     },
-    include: {
+    select: {
+      id: true,
+
+      // Basic Information
+      fullName: true,
+      email: true,
+      phone: true,
+
+      dateOfBirth: true,
+      gender: true,
+
+      // Profile
+      headline: true,
+      bio: true,
+      profileImage: true,
+      resumeUrl: true,
+
+      // Job Preferences
+      preferredRole: true,
+      preferredLocation: true,
+      expectedSalary: true,
+      willingToRelocate: true,
+      openToRemote: true,
+
+      // Account
+      status: true,
+      profileCompleted: true,
+      profileScore: true,
+
+      // Verification
+      emailVerified: true,
+      phoneVerified: true,
+
+      // Soft Delete
+
+      // Audit
+      createdAt: true,
+      updatedAt: true,
+
       addresses: {
         select: {
           id: true,
@@ -63,9 +101,9 @@ const getProfile = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(404, "Student not found");
   }
 
-  return res.status(200).json(
-    new ApiResponse(200, "Profile fetched successfully",student),
-  );
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Profile fetched successfully", student));
 });
 
 export { getProfile };
