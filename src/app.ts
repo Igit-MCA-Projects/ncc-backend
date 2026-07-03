@@ -4,6 +4,8 @@ import { globalErrorHandler } from "./utils/globalErrorHandler.js";
 import { validEnv } from "./validator/envValidator.js";
 import { ApiResponse } from "./utils/apiResponse.js";
 import cookieParser from "cookie-parser";
+import cors from "cors"
+import { studentRouter } from "./router/student.js";
 
 import { authRouter } from "./router/authentication.js";
 
@@ -18,6 +20,14 @@ app.use(
   }),
 );
 
+app.use(
+  cors({
+    origin: ["*"],
+    credentials: true,
+  }),
+);
+
+
 app.get(`${baseApi}/health`, (req, res) => {
   return res.status(200).json(
     new ApiResponse(200, "Everything is up and running", {
@@ -27,6 +37,7 @@ app.get(`${baseApi}/health`, (req, res) => {
 });
 
 app.use(`${baseApi}/auth`, authRouter);
+app.use(`${baseApi}/student`,studentRouter)
 
 app.use((req, res, next) => {
   next(new ApiError(404, "Route not found"));
