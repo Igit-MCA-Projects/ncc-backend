@@ -16,7 +16,9 @@ const uploadToCloudinary = async (filePath: any) => {
   }
   try {
     // upload the file to the cloudinary
-    const uploadRes = await cloudinary.uploader.upload(filePath);
+    const uploadRes = await cloudinary.uploader.upload(filePath, {
+      resource_type: "auto",
+    });
     if (!uploadRes) {
       if (validEnv.NODE_ENV === "DEV") {
         console.log(uploadRes);
