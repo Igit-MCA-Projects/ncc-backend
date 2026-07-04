@@ -8,6 +8,7 @@ import cors from "cors"
 import { studentRouter } from "./router/student.js";
 
 import { authRouter } from "./router/authentication.js";
+import { assetsRouter } from "./router/assets.js";
 
 const app = express();
 const baseApi = `/api/v${validEnv.API_VERSION}`;
@@ -19,6 +20,7 @@ app.use(
     extended: true,
   }),
 );
+app.use(express.static("public"));
 
 app.use(
   cors({
@@ -38,6 +40,7 @@ app.get(`${baseApi}/health`, (req, res) => {
 
 app.use(`${baseApi}/auth`, authRouter);
 app.use(`${baseApi}/student`,studentRouter)
+app.use(`${baseApi}`, assetsRouter);
 
 app.use((req, res, next) => {
   next(new ApiError(404, "Route not found"));

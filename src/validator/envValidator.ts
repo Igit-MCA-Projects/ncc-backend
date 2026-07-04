@@ -10,6 +10,15 @@ const envSchema = z.object({
   SYSTEM_DOMAIN: z.string("system mail is required"),
   ACCESS_TOKEN_SECRET: z.string("Access token secret is required"),
   ACCESS_TOKEN_EXPIRY: z.string("access token expire is required"),
+  CLOUDINARY_CLOUD_NAME: z.string(
+    "Cloudinary cloud name is required for store the assets",
+  ),
+  CLOUDINARY_API_KEY: z.string(
+    "cloudinary api key is reqired for strore assets",
+  ),
+  CLOUDINARY_API_SECRET: z.string(
+    "cloudinary api secret is required for the store assets",
+  ),
 });
 
 const validEnv = envSchema.parse(process.env);
