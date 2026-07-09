@@ -6,6 +6,7 @@ import { ApiResponse } from "./utils/apiResponse.js";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import { studentRouter } from "./router/student.js";
+import { adminRouter } from "./router/admin.js";
 
 import { authRouter } from "./router/authentication.js";
 import { assetsRouter } from "./router/assets.js";
@@ -40,6 +41,7 @@ app.get(`${baseApi}/health`, (req, res) => {
 
 app.use(`${baseApi}/auth`, authRouter);
 app.use(`${baseApi}/student`,studentRouter)
+app.use(`${baseApi}/admin`, adminRouter);
 app.use(`${baseApi}`, assetsRouter);
 
 app.use((req, res, next) => {

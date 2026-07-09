@@ -63,6 +63,7 @@ const completeProfileSchema = z.object({
   addresses: z.array(addressSchema).optional(),
   educations: z.array(educationSchema).optional(),
   socialLinks: z.array(socialLinkSchema).optional(),
+  skills: z.array(z.string()),
 });
 
 const completeProfile = asyncHandler(async (req: Request, res: Response) => {
@@ -110,6 +111,7 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
         expectedSalary: data.expectedSalary,
         willingToRelocate: data.willingToRelocate,
         openToRemote: data.openToRemote,
+        skills: data.skills,
         profileCompleted: true,
       },
     });
@@ -167,6 +169,7 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
         id: studentId,
       },
       include: {
+        skills: true,
         addresses: true,
         educations: true,
         socialLinks: true,

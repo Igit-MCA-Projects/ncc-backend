@@ -20,7 +20,7 @@ const adminDataSchema = z.object({
   password: z.string().min(8, {
     message: "Password must contain at least 8 characters",
   }),
-  adminRole: z.enum(["SYSTEM_ADMIN", "TEACHER", "RECRUITER"]),
+  adminRole: z.enum(["SYSTEM_ADMIN", "TEACHER"]),
 });
 
 const adminRegister = asyncHandler(async (req: Request, res: Response) => {

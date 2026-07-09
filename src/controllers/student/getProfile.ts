@@ -39,6 +39,7 @@ const getProfile = asyncHandler(async (req: Request, res: Response) => {
       expectedSalary: true,
       willingToRelocate: true,
       openToRemote: true,
+      skills: true,
 
       // Account
       status: true,

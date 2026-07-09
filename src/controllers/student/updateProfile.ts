@@ -18,6 +18,7 @@ const updateProfileSchema = z.object({
   expectedSalary: z.number().int().positive().optional(),
   willingToRelocate: z.boolean().optional(),
   openToRemote: z.boolean().optional(),
+  skills: z.array(z.string()).optional(),
 });
 
 const updateProfile = asyncHandler(async (req: Request, res: Response) => {
@@ -67,6 +68,7 @@ const updateProfile = asyncHandler(async (req: Request, res: Response) => {
     updateData.willingToRelocate = data.willingToRelocate;
   if (data.openToRemote !== undefined)
     updateData.openToRemote = data.openToRemote;
+  if (data.skills !== undefined) updateData.skills = data.skills;
 
   // update student profile
   const updatedStudent = await db.student.update({
@@ -136,6 +138,7 @@ const updateProfile = asyncHandler(async (req: Request, res: Response) => {
       expectedSalary: updatedStudent.expectedSalary,
       willingToRelocate: updatedStudent.willingToRelocate,
       openToRemote: updatedStudent.openToRemote,
+      skills: updatedStudent.skills,
       status: updatedStudent.status,
       profileCompleted: updatedStudent.profileCompleted,
       profileScore: updatedStudent.profileScore,
