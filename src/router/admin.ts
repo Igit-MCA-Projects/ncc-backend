@@ -17,6 +17,12 @@ import { deleteNotification } from "../controllers/admin/notification/deleteNoti
 import { getNotification } from "../controllers/admin/notification/getAllNotification.js";
 import { getAllMentorshipRequests } from "../controllers/admin/mentor/getAllMentorRequest.js";
 import { updateMentorshipStatus } from "../controllers/admin/mentor/updateMentorshipStatus.js";
+import { addNccBenifit } from "../controllers/admin/nccBenifit/addNccBenifit.js";
+import { deleteNccBenifit } from "../controllers/admin/nccBenifit/deleteNccBenifit.js";
+import { getNccBenifit } from "../controllers/admin/nccBenifit/getNccBenifit.js";
+import { addScholarship } from "../controllers/admin/scholarship/addScholarship.js";
+import { deleteScholarship } from "../controllers/admin/scholarship/deleteScholarship.js";
+import { getScholarship } from "../controllers/admin/scholarship/getScholarhip.js";
 
 const adminRouter = Router();
 
@@ -78,6 +84,39 @@ adminRouter.put(
   authMiddleware,
   adminMiddleware,
   updateMentorshipStatus,
+);
+
+adminRouter.post(
+  "/ncc-benifit",
+  authMiddleware,
+  adminMiddleware,
+  addNccBenifit,
+);
+adminRouter.delete(
+  "/ncc-benifit",
+  authMiddleware,
+  adminMiddleware,
+  deleteNccBenifit,
+);
+adminRouter.get("/ncc-benifit", authMiddleware, adminMiddleware, getNccBenifit);
+
+adminRouter.post(
+  "/scholarship",
+  authMiddleware,
+  adminMiddleware,
+  addScholarship,
+);
+adminRouter.delete(
+  "/scholarship",
+  authMiddleware,
+  adminMiddleware,
+  deleteScholarship,
+);
+adminRouter.get(
+  "/scholarship",
+  authMiddleware,
+  adminMiddleware,
+  getScholarship,
 );
 
 export { adminRouter };
