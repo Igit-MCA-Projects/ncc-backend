@@ -6,7 +6,7 @@ import { db } from "../../../db/prisma.js";
 import { asyncHandler } from "../../../utils/asyncHandler.js";
 
 const organizationSchema = z.object({
-    name: z
+  name: z
     .string()
     .trim()
     .min(1, { message: "Organization name is required" })
@@ -48,8 +48,6 @@ const updateJob = asyncHandler(async (req: Request, res: Response) => {
   if (!adminId) {
     throw new ApiError(401, "Access denied, authentication required");
   }
-
-  
 
   const job = await db.job.findFirst({
     where: {
@@ -94,7 +92,7 @@ const updateJob = asyncHandler(async (req: Request, res: Response) => {
     if (Object.keys(organizationData).length > 0) {
       await tx.organization.update({
         where: {
-          id:job.organizationId
+          id: job.organizationId,
         },
         data: organizationData,
       });

@@ -11,30 +11,20 @@ const hiringCalenderSchema = z.object({
     .trim()
     .min(1, { message: "Company name is required" }),
   title: z.string().trim().min(1, { message: "Title is required" }),
-  description: z
-    .string()
-    .trim()
-    .min(1, { message: "Description is required" }),
+  description: z.string().trim().min(1, { message: "Description is required" }),
   salaryRange: z
     .string()
     .trim()
     .min(1, { message: "Salary range is required" }),
   hiringMonth: z.string().datetime(),
   applyLink: z.string().url().optional(),
-  prepairResource: z
-    .array(z.string().trim().min(1))
-    .optional()
-    .default([]),
+  prepairResource: z.array(z.string().trim().min(1)).optional().default([]),
 });
 
 const postHiringCalender = asyncHandler(async (req: Request, res: Response) => {
   const validRes = hiringCalenderSchema.safeParse(req.body);
   if (!validRes.success) {
-    throw new ApiError(
-      400,
-      "Provided data are invalid",
-      validRes.error.issues,
-    );
+    throw new ApiError(400, "Provided data are invalid", validRes.error.issues);
   }
 
   const data = validRes.data;
@@ -67,4 +57,4 @@ const postHiringCalender = asyncHandler(async (req: Request, res: Response) => {
     );
 });
 
-export {postHiringCalender}
+export { postHiringCalender };

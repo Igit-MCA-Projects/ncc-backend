@@ -16,60 +16,60 @@ const updateHiringCalenderSchema = z.object({
   prepairResource: z.array(z.string().trim().min(1)).optional(),
 });
 
+const updateHiringcalender = asyncHandler(
+  async (req: Request, res: Response) => {
+    const validRes = updateHiringCalenderSchema.safeParse(req.body);
+    if (!validRes.success) {
+      throw new ApiError(
+        400,
+        "Provided data are invalid",
+        validRes.error.issues,
+      );
+    }
 
+    const data = validRes.data;
+    const adminId = req.id;
 
-const updateHiringcalender = asyncHandler(async (req: Request, res: Response) => {
-  const validRes = updateHiringCalenderSchema.safeParse(req.body);
-  if (!validRes.success) {
-    throw new ApiError(
-      400,
-      "Provided data are invalid",
-      validRes.error.issues,
-    );
-  }
+    if (!adminId) {
+      throw new ApiError(401, "Access denied, authentication required");
+    }
 
-  const data = validRes.data;
-  const adminId = req.id;
+    const existingHiringCalender = await db.hiringCalender.findUnique({
+      where: {
+        id: data.id,
+        isDeleted: false,
+      },
+    });
 
-  if (!adminId) {
-    throw new ApiError(401, "Access denied, authentication required");
-  }
+    if (!existingHiringCalender) {
+      throw new ApiError(404, "Hiring calender not found");
+    }
 
-  const existingHiringCalender = await db.hiringCalender.findUnique({
-    where: {
-      id: data.id,
-      isDeleted: false,
-    },
-  });
+    const updatedHiringCalender = await db.hiringCalender.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        companyName: data.companyName,
+        title: data.title,
+        description: data.description,
+        salaryRange: data.salaryRange,
+        hiringMonth: data.hiringMonth ? new Date(data.hiringMonth) : undefined,
+        applyLink: data.applyLink,
+        prepairResource: data.prepairResource,
+      },
+    });
 
-  if (!existingHiringCalender) {
-    throw new ApiError(404, "Hiring calender not found");
-  }
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          "Hiring calender updated successfully",
+          updatedHiringCalender,
+        ),
+      );
+  },
+);
 
-  const updatedHiringCalender = await db.hiringCalender.update({
-    where: {
-      id: data.id,
-    },
-    data: {
-      companyName: data.companyName,
-      title: data.title,
-      description: data.description,
-      salaryRange: data.salaryRange,
-      hiringMonth: data.hiringMonth ? new Date(data.hiringMonth) : undefined,
-      applyLink: data.applyLink,
-      prepairResource: data.prepairResource,
-    },
-  });
-
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(
-        200,
-        "Hiring calender updated successfully",
-        updatedHiringCalender,
-      ),
-    );
-});
-
-export {  updateHiringcalender };
+export { updateHiringcalender };
