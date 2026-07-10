@@ -52,6 +52,8 @@ model Admin {
   isDeleted Boolean   @default(false)
   deletedAt DateTime?
 
+  mentorRequests MentorRequest[]
+
   @@index([organizationId])
   @@index([role])
 }
@@ -135,6 +137,8 @@ model Student {
   // Soft Delete
   isDeleted Boolean   @default(false)
   deletedAt DateTime?
+
+  mentorRequests MentorRequest[]
 
   // Audit
   createdAt DateTime @default(now())
@@ -328,6 +332,60 @@ model BacklistToken {
 enum NotificationType {
   PERSONAL
   GENERAL
+}
+
+model NccBenifit {
+  id String @id @default(cuid())
+
+  cirtificate  String
+  benifit      String   @db.Text
+  Scholarship  String?
+  bonusMark    String?
+  nccQuota     String?
+  scholarships String[]
+  isDeleted    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Scholarship {
+  id               String   @id @default(cuid())
+  name             String
+  eligibility      String
+  requiredDocument String[]
+  amount           String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MentorRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model MentorRequest {
+  id String @id @default(cuid())
+
+  note      String @db.Text
+  studentId String
+  teacherId String
+
+  status MentorRequestStatus @default(PENDING)
+
+  requestedAt DateTime  @default(now())
+  respondedAt DateTime?
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher Admin   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, teacherId])
 }
 
 model Notification {

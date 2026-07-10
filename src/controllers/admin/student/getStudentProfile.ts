@@ -5,11 +5,9 @@ import { z } from "zod";
 import { db } from "../../../db/prisma.js";
 import { asyncHandler } from "../../../utils/asyncHandler.js";
 
-
-
 const getStudentProfile = asyncHandler(async (req: Request, res: Response) => {
-    // get student id from request params
-  const { id }= req.query;
+  // get student id from request params
+  const { id } = req.query;
 
   if (!id) {
     throw new ApiError(400, "Student id is required");
@@ -53,7 +51,7 @@ const getStudentProfile = asyncHandler(async (req: Request, res: Response) => {
       },
       socialLinks: true,
       nccProfile: true,
-      
+
       // password, verifyToken, isDeleted, deletedAt intentionally excluded
     },
   });
@@ -64,7 +62,9 @@ const getStudentProfile = asyncHandler(async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Student profile fetched successfully", student));
+    .json(
+      new ApiResponse(200, "Student profile fetched successfully", student),
+    );
 });
 
 export { getStudentProfile };

@@ -15,6 +15,8 @@ import { getStudentProfile } from "../controllers/admin/student/getStudentProfil
 import { createNotification } from "../controllers/admin/notification/generateNotification.js";
 import { deleteNotification } from "../controllers/admin/notification/deleteNotification.js";
 import { getNotification } from "../controllers/admin/notification/getAllNotification.js";
+import { getAllMentorshipRequests } from "../controllers/admin/mentor/getAllMentorRequest.js";
+import { updateMentorshipStatus } from "../controllers/admin/mentor/updateMentorshipStatus.js";
 
 const adminRouter = Router();
 
@@ -52,7 +54,30 @@ adminRouter.post(
   adminMiddleware,
   createNotification,
 );
-adminRouter.get("/notification", authMiddleware,adminMiddleware,getNotification)
-adminRouter.delete("/notification",authMiddleware,adminMiddleware,deleteNotification)
+adminRouter.get(
+  "/notification",
+  authMiddleware,
+  adminMiddleware,
+  getNotification,
+);
+adminRouter.delete(
+  "/notification",
+  authMiddleware,
+  adminMiddleware,
+  deleteNotification,
+);
+
+adminRouter.get(
+  "/mentorship",
+  authMiddleware,
+  adminMiddleware,
+  getAllMentorshipRequests,
+);
+adminRouter.put(
+  "/mentorship",
+  authMiddleware,
+  adminMiddleware,
+  updateMentorshipStatus,
+);
 
 export { adminRouter };
