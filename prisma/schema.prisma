@@ -228,6 +228,7 @@ model Job {
   id          String    @id @default(cuid())
   title       String
   description String
+  jobImage String?
   skills      String[]
   applyLink   String?
   startDate   DateTime

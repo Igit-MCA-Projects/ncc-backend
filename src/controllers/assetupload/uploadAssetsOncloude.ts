@@ -16,9 +16,15 @@ const uploadAsset = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(400, "File not uploaded to the cloudianry");
   }
 
-  return res.status(200).json(
-    new ApiResponse(200, "file uploded successfuly to the cloude",cloudinaryRes.fileUrl),
-  );
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        "file uploded successfuly to the cloude",
+        cloudinaryRes.fileUrl,
+      ),
+    );
 });
 
 export { uploadAsset };

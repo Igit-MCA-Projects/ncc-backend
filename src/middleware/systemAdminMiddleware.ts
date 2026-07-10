@@ -17,11 +17,21 @@ const systemAdminMiddleware = asyncHandler(
       },
       select: {
         id: true,
+        isVerified: true,
+        isActive: true,
       },
     });
 
     if (!systemAdmin) {
       throw new ApiError(400, "Not have access only access to teacher");
+    }
+
+    if (!systemAdmin.isVerified) {
+      throw new ApiError(400, "system admin account is not verifyed");
+    }
+
+    if (!systemAdmin.isActive) {
+      throw new ApiError(400, "System admin accunt is not active");
     }
 
     req.id = systemAdmin.id;

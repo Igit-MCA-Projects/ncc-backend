@@ -41,16 +41,13 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
   const admin = await db.admin.findUnique({
     where: {
       id: adminId,
-      OR:[{role:"SYSTEM_ADMIN"}, {role:"TEACHER"}]
+      OR: [{ role: "SYSTEM_ADMIN" }, { role: "TEACHER" }],
     },
   });
-
-
 
   if (!admin) {
     throw new ApiError(404, "Admin not found");
   }
-
 
   const updatedAdmin = await db.$transaction(async (tx) => {
     let organizationId = admin.organizationId;
@@ -110,7 +107,7 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Profile completed successfully",null));
+    .json(new ApiResponse(200, "Profile completed successfully", null));
 });
 
 export { completeProfile };
