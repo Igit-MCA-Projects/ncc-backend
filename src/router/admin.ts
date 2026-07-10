@@ -10,6 +10,8 @@ import { updateJob } from "../controllers/admin/job/updateJob.js";
 import { postHiringCalender } from "../controllers/admin/hiringCalender/postHiringCalender.js";
 import { getHiringCalender } from "../controllers/admin/hiringCalender/getHiringCalender.js";
 import { updateHiringcalender } from "../controllers/admin/hiringCalender/updateHirinCalender.js";
+import { getStudents } from "../controllers/admin/student/getStudents.js";
+import { getStudentProfile } from "../controllers/admin/student/getStudentProfile.js";
 
 const adminRouter = Router();
 
@@ -27,10 +29,13 @@ adminRouter.post(
 );
 adminRouter.get("/hiring-calender", authMiddleware, getHiringCalender);
 adminRouter.put(
-  "hiring-calender",
+  "/hiring-calender",
   authMiddleware,
   adminMiddleware,
   updateHiringcalender,
 );
+
+adminRouter.get("/students", authMiddleware, adminMiddleware, getStudents);
+adminRouter.get("/student-profile",authMiddleware,adminMiddleware,getStudentProfile)
 
 export { adminRouter };

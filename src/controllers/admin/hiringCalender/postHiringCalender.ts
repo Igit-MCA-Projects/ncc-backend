@@ -48,13 +48,7 @@ const postHiringCalender = asyncHandler(async (req: Request, res: Response) => {
 
   return res
     .status(201)
-    .json(
-      new ApiResponse(
-        201,
-        "Hiring calender created successfully",
-        createdHiringCalender,
-      ),
-    );
+    .json(new ApiResponse(201, "Hiring calender created successfully", null));
 });
 
 export { postHiringCalender };

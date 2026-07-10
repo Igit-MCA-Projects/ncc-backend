@@ -14,6 +14,7 @@ const updateHiringCalenderSchema = z.object({
   hiringMonth: z.string().datetime().optional(),
   applyLink: z.string().url().optional(),
   prepairResource: z.array(z.string().trim().min(1)).optional(),
+  isDeleted: z.boolean().optional(),
 });
 
 const updateHiringcalender = asyncHandler(
@@ -57,6 +58,7 @@ const updateHiringcalender = asyncHandler(
         hiringMonth: data.hiringMonth ? new Date(data.hiringMonth) : undefined,
         applyLink: data.applyLink,
         prepairResource: data.prepairResource,
+        isDeleted: data.isDeleted,
       },
     });
 
