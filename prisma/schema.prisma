@@ -162,8 +162,8 @@ model NccProfile {
   nccRank         String?
 
   isNccProfileCompleted Boolean @default(true)
-  studentId String  @unique
-  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId             String  @unique
+  student               Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -323,4 +323,21 @@ model HiringCalender {
 model BacklistToken {
   id    String @id @default(cuid())
   token String
+}
+
+enum NotificationType {
+  PERSONAL
+  GENERAL
+}
+
+model Notification {
+  id         String           @id @default(cuid())
+  title      String
+  Descripton String?
+  studentId  String?
+  type       NotificationType @default(GENERAL)
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

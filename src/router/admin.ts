@@ -12,6 +12,9 @@ import { getHiringCalender } from "../controllers/admin/hiringCalender/getHiring
 import { updateHiringcalender } from "../controllers/admin/hiringCalender/updateHirinCalender.js";
 import { getStudents } from "../controllers/admin/student/getStudents.js";
 import { getStudentProfile } from "../controllers/admin/student/getStudentProfile.js";
+import { createNotification } from "../controllers/admin/notification/generateNotification.js";
+import { deleteNotification } from "../controllers/admin/notification/deleteNotification.js";
+import { getNotification } from "../controllers/admin/notification/getAllNotification.js";
 
 const adminRouter = Router();
 
@@ -36,6 +39,20 @@ adminRouter.put(
 );
 
 adminRouter.get("/students", authMiddleware, adminMiddleware, getStudents);
-adminRouter.get("/student-profile",authMiddleware,adminMiddleware,getStudentProfile)
+adminRouter.get(
+  "/student-profile",
+  authMiddleware,
+  adminMiddleware,
+  getStudentProfile,
+);
+
+adminRouter.post(
+  "/notification",
+  authMiddleware,
+  adminMiddleware,
+  createNotification,
+);
+adminRouter.get("/notification", authMiddleware,adminMiddleware,getNotification)
+adminRouter.delete("/notification",authMiddleware,adminMiddleware,deleteNotification)
 
 export { adminRouter };
