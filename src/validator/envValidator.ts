@@ -19,6 +19,8 @@ const envSchema = z.object({
   CLOUDINARY_API_SECRET: z.string(
     "cloudinary api secret is required for the store assets",
   ),
+  STUDENT_FRONTEND:z.string("student frontend url needed"),
+  ADMIN_FRONTEND:z.string("Admin frontend url needed"),
 });
 
 const validEnv = envSchema.parse(process.env);

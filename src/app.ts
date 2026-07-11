@@ -26,10 +26,14 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: ["*"],
+    origin: [
+      validEnv.STUDENT_FRONTEND,
+      validEnv.ADMIN_FRONTEND
+    ],
     credentials: true,
   }),
 );
+
 
 app.get(`${baseApi}/health`, (req, res) => {
   return res.status(200).json(
