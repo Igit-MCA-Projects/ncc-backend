@@ -169,7 +169,6 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
         id: studentId,
       },
       include: {
-        skills: true,
         addresses: true,
         educations: true,
         socialLinks: true,
