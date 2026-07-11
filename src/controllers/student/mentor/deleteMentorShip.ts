@@ -31,13 +31,10 @@ const deleteMentroShip = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(400, "This mentorship not belong to this student");
   }
 
-  await db.mentorRequest.update({
+  await db.mentorRequest.delete({
     where: {
       id: mentorship.id,
-    },
-    data: {
-      isDeleted: true,
-    },
+    }
   });
 
   return res

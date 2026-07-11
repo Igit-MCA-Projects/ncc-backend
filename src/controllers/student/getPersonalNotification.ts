@@ -37,7 +37,6 @@ const getPersonalNotification = asyncHandler(
           id: true,
           title: true,
           Descripton: true,
-          isDeleted: true,
         },
         orderBy: {
           createdAt: "asc",
@@ -45,16 +44,17 @@ const getPersonalNotification = asyncHandler(
         skip,
         take: limit,
       }),
-      db.student.count({
+      db.notification.count({
         where: {
           isDeleted: false,
-          type: "GENERAL",
+          type: "PERSONAL",
+          studentId: id,
         },
       }),
     ]);
-
+    
     return res.status(200).json(
-      new ApiResponse(200, "Hiring calenders fetched successfully", {
+      new ApiResponse(200, "Notification fetched successfully", {
         notifications,
         pagination: {
           page,
