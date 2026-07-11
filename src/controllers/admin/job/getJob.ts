@@ -5,11 +5,6 @@ import { db } from "../../../db/prisma.js";
 import { asyncHandler } from "../../../utils/asyncHandler.js";
 
 const getJob = asyncHandler(async (req: Request, res: Response) => {
-  const adminId = req.id;
-  if (!adminId) {
-    throw new ApiError(401, "Access denied, authentication required");
-  }
-
   const jobs = await db.job.findMany({
     where: {},
     orderBy: {

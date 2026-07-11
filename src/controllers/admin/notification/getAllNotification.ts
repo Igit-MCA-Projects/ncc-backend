@@ -21,9 +21,7 @@ const getNotification = asyncHandler(async (req: Request, res: Response) => {
 
   const [notifications, total] = await Promise.all([
     db.notification.findMany({
-      where: {
-        isDeleted: false,
-      },
+      where: {},
       select: {
         id: true,
         title: true,

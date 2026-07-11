@@ -115,15 +115,18 @@ model Student {
   socialLinks SocialLink[]
   skills      String[]
 
+  savedJobs SavedJob[]
+
   nccProfile             NccProfile?
   physicalMedicalProfile PhysicalMedicalProfile?
 
   // Job Preferences
   preferredRole     String?
   preferredLocation String[]
+
   expectedSalary    Int?
-  willingToRelocate Boolean  @default(false)
-  openToRemote      Boolean  @default(true)
+  willingToRelocate Boolean @default(false)
+  openToRemote      Boolean @default(true)
 
   // Account
   status           StudentStatus @default(ACTIVE)
@@ -299,6 +302,8 @@ model Job {
   ctc        String?
   stipend    String?
 
+  savedBy SavedJob[]
+
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
@@ -307,6 +312,23 @@ model Job {
   updatedAt DateTime @updatedAt
 
   @@index([organizationId])
+}
+
+model SavedJob {
+  id String @id @default(cuid())
+
+  studentId String
+  jobId     String
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  job     Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  // Prevent duplicate saves
+  @@unique([studentId, jobId])
+  @@index([studentId])
+  @@index([jobId])
 }
 
 model HiringCalender {

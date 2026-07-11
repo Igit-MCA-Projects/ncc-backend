@@ -10,6 +10,7 @@ import { adminRouter } from "./router/admin.js";
 
 import { authRouter } from "./router/authentication.js";
 import { assetsRouter } from "./router/assets.js";
+import { publicRouter } from "./router/public.js";
 
 const app = express();
 const baseApi = `/api/v${validEnv.API_VERSION}`;
@@ -41,6 +42,7 @@ app.get(`${baseApi}/health`, (req, res) => {
 app.use(`${baseApi}/auth`, authRouter);
 app.use(`${baseApi}/student`, studentRouter);
 app.use(`${baseApi}/admin`, adminRouter);
+app.use(`${baseApi}/public`, publicRouter);
 app.use(`${baseApi}`, assetsRouter);
 
 app.use((req, res, next) => {

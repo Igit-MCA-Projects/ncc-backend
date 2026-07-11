@@ -9,6 +9,13 @@ import { updateNccProfile } from "../controllers/student/updateNccProfile.js";
 import { applyMentorship } from "../controllers/student/mentor/applyForMentorShip.js";
 import { viewMentorshipStatus } from "../controllers/student/mentor/viewMentorShipStatus.js";
 import { deleteMentroShip } from "../controllers/student/mentor/deleteMentorShip.js";
+import { getAllMentor } from "../controllers/student/mentor/getAllMentors.js";
+import { getPersonalNotification } from "../controllers/student/getPersonalNotification.js";
+import {
+  deleteSavedJob,
+  getSavedJob,
+  saveJob,
+} from "../controllers/student/job.js";
 
 const studentRouter = Router();
 
@@ -21,8 +28,15 @@ studentRouter.post("/ncc-profile", authMiddleware, completeNccProfile);
 studentRouter.get("/ncc-profile", authMiddleware, getNccProfile);
 studentRouter.put("/ncc-profile", authMiddleware, updateNccProfile);
 
+studentRouter.get("/all-mentor", authMiddleware, getAllMentor);
 studentRouter.post("/mentorship", authMiddleware, applyMentorship);
 studentRouter.get("/mentorship", authMiddleware, viewMentorshipStatus);
 studentRouter.delete("/mentorship", authMiddleware, deleteMentroShip);
+
+studentRouter.get("/notification", authMiddleware, getPersonalNotification);
+
+studentRouter.get("/save-job", authMiddleware, getSavedJob);
+studentRouter.post("/save-job", authMiddleware, saveJob);
+studentRouter.delete("/save-job", authMiddleware, deleteSavedJob);
 
 export { studentRouter };
