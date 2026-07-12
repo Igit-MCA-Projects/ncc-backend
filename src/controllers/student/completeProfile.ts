@@ -92,7 +92,7 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
   }
 
   // use transaction to ensure data consistency
-  const updatedStudent = await db.$transaction(async (tx) => {
+  const updatedStudent = await db.$transaction(async (tx:any) => {
     // update student with basic profile data
     await tx.student.update({
       where: {

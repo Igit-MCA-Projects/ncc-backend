@@ -101,7 +101,7 @@ const updateProfile = asyncHandler(async (req: Request, res: Response) => {
   }
 
   // use transaction to ensure data consistency
-  const updatedStudent = await db.$transaction(async (tx) => {
+  const updatedStudent = await db.$transaction(async (tx:any) => {
     // update student with basic profile data (only fields actually sent)
     await tx.student.update({
       where: {

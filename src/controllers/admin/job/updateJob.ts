@@ -88,7 +88,7 @@ const updateJob = asyncHandler(async (req: Request, res: Response) => {
   if (data.organization?.description !== undefined)
     organizationData.description = data.organization.description;
 
-  const updatedJob = await db.$transaction(async (tx) => {
+  const updatedJob = await db.$transaction(async (tx:any) => {
     if (Object.keys(organizationData).length > 0) {
       await tx.organization.update({
         where: {

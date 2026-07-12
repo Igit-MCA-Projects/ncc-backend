@@ -13,7 +13,7 @@ const createNotificationSchema = z
     type: z.enum(["GENERAL", "PERSONAL"]).default("GENERAL"),
     studentId: z.string().optional(),
   })
-  .superRefine((data, ctx) => {
+  .superRefine((data:any, ctx:any) => {
     // personal notifications strictly require a studentId
     if (data.type === "PERSONAL" && !data.studentId) {
       ctx.addIssue({

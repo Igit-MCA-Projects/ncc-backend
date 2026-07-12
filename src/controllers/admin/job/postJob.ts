@@ -50,7 +50,7 @@ const postJob = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(401, "Access denied, authentication required");
   }
 
-  const createdJob = await db.$transaction(async (tx) => {
+  const createdJob = await db.$transaction(async (tx:any) => {
     let organizationId;
     if (data.organization) {
       const organization = await tx.organization.create({

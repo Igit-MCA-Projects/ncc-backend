@@ -49,7 +49,7 @@ const completeProfile = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(404, "Admin not found");
   }
 
-  const updatedAdmin = await db.$transaction(async (tx) => {
+  const updatedAdmin = await db.$transaction(async (tx:any) => {
     let organizationId = admin.organizationId;
 
     if (data.organization) {
