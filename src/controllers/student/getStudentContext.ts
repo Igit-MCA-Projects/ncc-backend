@@ -65,14 +65,14 @@ const studentContext = asyncHandler(async (req: Request, res: Response) => {
   }
 
   // Build education summary → { "B.Tech Computer Science": 8.2 (cgpa) or 82 (percentage) }
-  const education = student.educations.map((edu) => {
+  const education = student.educations.map((edu:any) => {
     const label =
       [edu.degree, edu.fieldOfStudy].filter(Boolean).join(" - ") || edu.level;
     return label;
   });
 
   const marks: Record<string, number | null> = {};
-  student.educations.forEach((edu) => {
+  student.educations.forEach((edu:any) => {
     const label =
       [edu.degree, edu.fieldOfStudy].filter(Boolean).join(" - ") || edu.level;
     marks[label] = edu.cgpa ?? edu.percentage ?? null;

@@ -39,7 +39,7 @@ const viewMentorshipStatus = asyncHandler(
     }
 
     // shape response: only reveal contact info once approved
-    const formattedRequests = requests.map((request) => {
+    const formattedRequests = requests.map((request:any) => {
       const base = {
         id: request.id,
         note: request.note,
