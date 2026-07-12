@@ -19,8 +19,17 @@ const envSchema = z.object({
   CLOUDINARY_API_SECRET: z.string(
     "cloudinary api secret is required for the store assets",
   ),
-  STUDENT_FRONTEND:z.string("student frontend url needed"),
-  ADMIN_FRONTEND:z.string("Admin frontend url needed"),
+  STUDENT_FRONTEND: z.string("student frontend url needed"),
+  ADMIN_FRONTEND: z.string("Admin frontend url needed"),
+  JOB_API_ARBEITNOW: z.string("Admin frontend url needed"),
+  JOB_API_THEMUSE: z.string("Admin frontend url needed"),
+  JOB_API_THEMUSE_REMOTIVE: z.string("Admin frontend url needed"),
+  RAPID_API_KEY: z.string("Admin frontend url needed"),
+  JOB_API_RAOID_API: z.string("Admin frontend url needed"),
+  GEMINAI_API_KEY: z.string("gemini ai api key required"),
+  GEMINAI_MODEL: z.string("gemini ai model required"),
+  GMAIL: z.string("app Gmail is required"),
+  APP_PASSWORD: z.string("App Password is required"),
 });
 
 const validEnv = envSchema.parse(process.env);

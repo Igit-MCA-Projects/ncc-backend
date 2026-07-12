@@ -16,6 +16,7 @@ import {
   getSavedJob,
   saveJob,
 } from "../controllers/student/job.js";
+import { getRecomendedJob } from "../controllers/job/getRecomendedJob.js";
 
 const studentRouter = Router();
 
@@ -38,5 +39,7 @@ studentRouter.get("/notification", authMiddleware, getPersonalNotification);
 studentRouter.get("/save-job", authMiddleware, getSavedJob);
 studentRouter.post("/save-job", authMiddleware, saveJob);
 studentRouter.delete("/save-job", authMiddleware, deleteSavedJob);
+
+studentRouter.get("/recomended-job",authMiddleware,getRecomendedJob)
 
 export { studentRouter };
