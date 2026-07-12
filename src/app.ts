@@ -28,6 +28,7 @@ app.use(
   cors({
     origin: [
       validEnv.STUDENT_FRONTEND,
+      validEnv.STUDENT_FRONTEND_PROD,
       validEnv.ADMIN_FRONTEND
     ],
     credentials: true,

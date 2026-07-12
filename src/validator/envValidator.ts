@@ -20,6 +20,7 @@ const envSchema = z.object({
     "cloudinary api secret is required for the store assets",
   ),
   STUDENT_FRONTEND: z.string("student frontend url needed"),
+  STUDENT_FRONTEND_PROD: z.string("student frontend url needed prod"),
   ADMIN_FRONTEND: z.string("Admin frontend url needed"),
   JOB_API_ARBEITNOW: z.string("Admin frontend url needed"),
   JOB_API_THEMUSE: z.string("Admin frontend url needed"),

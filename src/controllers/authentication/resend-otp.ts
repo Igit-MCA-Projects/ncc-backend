@@ -58,7 +58,7 @@ const resendOtp = asyncHandler(async (req: Request, res: Response) => {
     otp,
   );
 
-  const mailRes = await sendMail(
+   sendMail(
     student.email,
     mailTemplate,
     "Verify you email",

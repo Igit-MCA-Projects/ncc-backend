@@ -72,7 +72,7 @@ const studentRegister = asyncHandler(async (req: Request, res: Response) => {
     otp,
   );
 
-  const mailRes = await sendMail(
+   sendMail(
     newStudent.email,
     mailTemplate,
     "Verify you email",
