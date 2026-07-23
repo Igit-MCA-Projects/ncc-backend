@@ -29,7 +29,8 @@ app.use(
     origin: [
       validEnv.STUDENT_FRONTEND,
       validEnv.STUDENT_FRONTEND_PROD,
-      validEnv.ADMIN_FRONTEND
+      validEnv.ADMIN_FRONTEND,
+      validEnv.ADMIN_FROTEND_PROD
     ],
     credentials: true,
   }),

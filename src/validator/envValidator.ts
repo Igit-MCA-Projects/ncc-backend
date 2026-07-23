@@ -31,6 +31,7 @@ const envSchema = z.object({
   GEMINAI_MODEL: z.string("gemini ai model required"),
   GMAIL: z.string("app Gmail is required"),
   APP_PASSWORD: z.string("App Password is required"),
+  ADMIN_FROTEND_PROD: z.string("admn prod url is required"),
 });
 
 const validEnv = envSchema.parse(process.env);
